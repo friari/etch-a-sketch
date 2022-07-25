@@ -1,0 +1,48 @@
+:root {
+  --primary-turquoise: #35CABB;
+  --secondary-amethyst: #BB35CA;
+  --tertiary-earls-green: #CABB35;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  background-color: var(--tertiary-earls-green);
+}
+
+.container {
+  /* Position */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* Grid */
+  display: grid;
+  grid-template-rows: repeat(16, 1fr);
+  grid-template-columns: repeat(16, 1fr);
+
+  /* Size */
+  width: 50%;
+  max-width: 500px;
+  aspect-ratio: 1;
+
+  /* Border */
+  border: 2px solid var(--primary-turquoise);
+  border-radius: 1rem;
+
+  /* Color */
+  background-color: #edfaf9;
+}
+
+.grid-item {
+  transition: background-color ease .5s;
+}
+
+.grid-item.active {
+  transition: none;
+}
