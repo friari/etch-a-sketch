@@ -1,3 +1,5 @@
+let shadeMode = false;
+
 const body = document.querySelector('body');
 
 const outerContainer = document.createElement('div');
@@ -14,13 +16,15 @@ const clearBtn = document.createElement('button');
 clearBtn.classList.add('btn', 'btn--clear');
 clearBtn.innerText = 'Clear';
 
+const shadeBtn = document.createElement('button');
+shadeBtn.classList.add('btn', 'btn--shade');
+shadeBtn.innerText = 'Toggle shade mode';
+
 function initGridItem() {
   let gridItem = document.createElement('div');
+  resetOpacity(gridItem);
+
   gridItem.classList.add('grid-item');
-  gridItem.addEventListener('mouseenter', () => {
-    gridItem.classList.add('active');
-    gridItem.style.backgroundColor = "black";
-  });
 
   return gridItem;
 }
@@ -31,6 +35,7 @@ function clearGrid() {
   activeGridItems.forEach(gridItem => {
     gridItem.classList.remove('active');
     gridItem.style.backgroundColor = "";
+    resetOpacity(gridItem);
   });
 }
 
@@ -56,6 +61,21 @@ function createGrid(amount = 16) {
       grid.appendChild(gridItem);
     }
   }
+
+  grid.addEventListener('mouseenter', (e) => {
+    let target = e.target;
+    if (target.matches('.grid-item')) {
+      let opacity = parseFloat(target.getAttribute('data-opacity'));
+      console.log(opacity);
+      target.classList.add('active');
+      if (!(opacity > 10) && shadeMode == true) {
+        target.style.backgroundColor = `rgba(0,0,0,${opacity * 0.1})`;
+        target.setAttribute('data-opacity', `${(opacity + 1).toString()}`);
+      } else if (shadeMode == false) {
+        target.style.backgroundColor = `rgb(0,0,0)`;
+      }
+    }
+  }, true)
 
   grid.style.gridTemplateRows = `repeat(${amount}, 1fr)`;
   grid.style.gridTemplateColumns = `repeat(${amount}, 1fr)`;
@@ -84,12 +104,23 @@ function onClearBtnClick() {
   clearGrid();
 }
 
+function onShadeBtnClick() {
+  shadeMode = shadeMode ? false : true;
+}
+
+// Utility functions
+function resetOpacity(gridItem) {
+  gridItem.setAttribute('data-opacity', '1');
+}
+
 // Event Listeners
 redrawBtn.addEventListener('click', onRedrawBtnClick)
 clearBtn.addEventListener('click', onClearBtnClick);
+shadeBtn.addEventListener('click', onShadeBtnClick);
 
 btnContainer.appendChild(redrawBtn);
 btnContainer.appendChild(clearBtn);
+btnContainer.appendChild(shadeBtn);
 
 outerContainer.appendChild(btnContainer);
 
