@@ -3,8 +3,8 @@ const body = document.querySelector('body');
 const outerContainer = document.createElement('div');
 outerContainer.classList.add('outerContainer');
 
-const container = document.createElement('div');
-container.classList.add('container');
+const btnContainer = document.createElement('div');
+btnContainer.classList.add('btnContainer');
 
 const redrawBtn = document.createElement('button');
 redrawBtn.classList.add('btn', 'btn--redraw');
@@ -34,32 +34,32 @@ function clearGrid() {
   });
 }
 
-function redrawContainer() {
+function redrawGrid() {
   // removing container if it exists
-  let oldContainer = document.querySelector('.container');
-  if (oldContainer) {
-    oldContainer.remove();
+  let oldGrid = document.querySelector('.grid');
+  if (oldGrid) {
+    oldGrid.remove();
   }
 
   // creating new container and returning
-  const container = document.createElement('div');
-  container.classList.add('container');
-  return container;
+  const grid = document.createElement('div');
+  grid.classList.add('grid');
+  return grid;
 }
 
 function createGrid(amount = 16) {
-  let container = redrawContainer();
+  let grid = redrawGrid();
 
   for (let rowItem = 0; rowItem < amount; rowItem++) {
     for (let colItem = 0; colItem < amount; colItem++) {
       let gridItem = initGridItem();
-      container.appendChild(gridItem);
+      grid.appendChild(gridItem);
     }
   }
 
-  container.style.gridTemplateRows = `repeat(${amount}, 1fr)`;
-  container.style.gridTemplateColumns = `repeat(${amount}, 1fr)`;
-  outerContainer.appendChild(container);
+  grid.style.gridTemplateRows = `repeat(${amount}, 1fr)`;
+  grid.style.gridTemplateColumns = `repeat(${amount}, 1fr)`;
+  outerContainer.appendChild(grid);
 }
 
 function sendUserPrompt() {
@@ -88,8 +88,10 @@ function onClearBtnClick() {
 redrawBtn.addEventListener('click', onRedrawBtnClick)
 clearBtn.addEventListener('click', onClearBtnClick);
 
-outerContainer.appendChild(redrawBtn);
-outerContainer.appendChild(clearBtn);
+btnContainer.appendChild(redrawBtn);
+btnContainer.appendChild(clearBtn);
+
+outerContainer.appendChild(btnContainer);
 
 createGrid();
 

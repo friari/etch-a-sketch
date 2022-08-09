@@ -16,7 +16,18 @@ body {
   background-color: #C5F0EB;
 }
 
-.container {
+.outerContainer {
+  display: flex;
+}
+
+.btn {
+  padding: .5rem 1rem;
+  border: 1px solid var(--secondary-amethyst);
+  border-radius: 1rem;
+  background-color: var(--primary-turquoise);
+}
+
+.grid {
   /* Display */
   overflow: hidden;
 
@@ -35,7 +46,7 @@ body {
   aspect-ratio: 1;
 
   /* Border */
-  border: 2px solid var(--primary-turquoise);
+  border: 2px solid var(--secondary-amethyst);
   border-radius: 1rem;
 
   /* Color */
