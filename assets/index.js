@@ -10,6 +10,10 @@ const redrawBtn = document.createElement('button');
 redrawBtn.classList.add('btn', 'btn--redraw');
 redrawBtn.innerText = 'Change grid size';
 
+const clearBtn = document.createElement('button');
+clearBtn.classList.add('btn', 'btn--clear');
+clearBtn.innerText = 'Clear';
+
 function initGridItem() {
   let gridItem = document.createElement('div');
   gridItem.classList.add('grid-item');
@@ -21,11 +25,12 @@ function initGridItem() {
   return gridItem;
 }
 
-function resetGridItems() {
-  const activeGridItems = document.getElementsByClassName('active');
+function clearGrid() {
+  const activeGridItems = document.querySelectorAll('.active');
 
   activeGridItems.forEach(gridItem => {
     gridItem.classList.remove('active');
+    gridItem.style.backgroundColor = "";
   });
 }
 
@@ -75,10 +80,16 @@ function onRedrawBtnClick() {
   createGrid(gridAmount);
 }
 
+function onClearBtnClick() {
+  clearGrid();
+}
+
 // Event Listeners
 redrawBtn.addEventListener('click', onRedrawBtnClick)
+clearBtn.addEventListener('click', onClearBtnClick);
 
 outerContainer.appendChild(redrawBtn);
+outerContainer.appendChild(clearBtn);
 
 createGrid();
 

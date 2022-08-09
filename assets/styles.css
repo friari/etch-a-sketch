@@ -43,7 +43,7 @@ body {
 }
 
 .grid-item {
-  transition: background-color ease .5s;
+  transition: background-color ease .25s;
   border: .5px solid black;
 }
 
