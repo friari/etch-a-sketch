@@ -13,10 +13,13 @@ html {
 
 body {
   position: relative;
-  background-color: var(--tertiary-earls-green);
+  background-color: #C5F0EB;
 }
 
 .container {
+  /* Display */
+  overflow: hidden;
+
   /* Position */
   margin-left: auto;
   margin-right: auto;
@@ -41,6 +44,7 @@ body {
 
 .grid-item {
   transition: background-color ease .5s;
+  border: .5px solid black;
 }
 
 .grid-item.active {
