@@ -68,9 +68,11 @@ function createGrid(amount = 16) {
       let opacity = parseFloat(target.getAttribute('data-opacity'));
       console.log(opacity);
       target.classList.add('active');
-      if (!(opacity > 10)) {
+      if (!(opacity > 10) && shadeMode == true) {
         target.style.backgroundColor = `rgba(0,0,0,${opacity * 0.1})`;
         target.setAttribute('data-opacity', `${(opacity + 1).toString()}`);
+      } else if (shadeMode == false) {
+        target.style.backgroundColor = `rgb(0,0,0)`;
       }
     }
   }, true)
@@ -103,7 +105,7 @@ function onClearBtnClick() {
 }
 
 function onShadeBtnClick() {
-  shadeMode = true;
+  shadeMode = shadeMode ? false : true;
 }
 
 // Utility functions
