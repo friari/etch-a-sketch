@@ -16,10 +16,17 @@ clearBtn.innerText = 'Clear';
 
 function initGridItem() {
   let gridItem = document.createElement('div');
+  resetOpacity(gridItem);
+
   gridItem.classList.add('grid-item');
   gridItem.addEventListener('mouseenter', () => {
+    let opacity = parseFloat(gridItem.getAttribute('data-opacity'));
+    console.log(opacity);
     gridItem.classList.add('active');
-    gridItem.style.backgroundColor = "black";
+    if (!(opacity > 10)) {
+      gridItem.style.backgroundColor = `rgba(0,0,0,${opacity * 0.1})`;
+      gridItem.setAttribute('data-opacity', `${(opacity + 1).toString()}`);
+    }
   });
 
   return gridItem;
@@ -31,6 +38,7 @@ function clearGrid() {
   activeGridItems.forEach(gridItem => {
     gridItem.classList.remove('active');
     gridItem.style.backgroundColor = "";
+    resetOpacity(gridItem);
   });
 }
 
@@ -82,6 +90,11 @@ function onRedrawBtnClick() {
 
 function onClearBtnClick() {
   clearGrid();
+}
+
+// Utility functions
+function resetOpacity(gridItem) {
+  gridItem.setAttribute('data-opacity', '1');
 }
 
 // Event Listeners
