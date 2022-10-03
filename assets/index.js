@@ -1,5 +1,8 @@
+// Variables
 let shadeMode = false;
+let drawMode = true;
 
+// Elements
 const body = document.querySelector('body');
 
 const outerContainer = document.createElement('div');
@@ -65,8 +68,12 @@ function createGrid(amount = 16) {
   grid.addEventListener('mouseenter', (e) => {
     let target = e.target;
     if (target.matches('.grid-item')) {
+      if (!drawMode) {
+        target.style.backgroundColor = "";
+        return;
+      }
+
       let opacity = parseFloat(target.getAttribute('data-opacity'));
-      console.log(opacity);
       target.classList.add('active');
       if (!(opacity > 10) && shadeMode == true) {
         target.style.backgroundColor = `rgba(0,0,0,${opacity * 0.1})`;
@@ -94,18 +101,21 @@ function sendUserPrompt() {
   return userPromptAmount;
 }
 
-function onRedrawBtnClick() {
+function onRedrawBtnClick(e) {
   let gridAmount = sendUserPrompt();
 
   createGrid(gridAmount);
+  e.target.blur();
 }
 
-function onClearBtnClick() {
+function onClearBtnClick(e) {
   clearGrid();
+  e.target.blur();
 }
 
-function onShadeBtnClick() {
+function onShadeBtnClick(e) {
   shadeMode = shadeMode ? false : true;
+  e.target.blur();
 }
 
 // Utility functions
@@ -114,6 +124,18 @@ function resetOpacity(gridItem) {
 }
 
 // Event Listeners
+window.addEventListener('keydown', e => {
+  if (e.key === " ") {
+    drawMode = false;
+  }
+});
+
+window.addEventListener('keyup', e => {
+  if (e.key === " ") {
+    drawMode = true;
+  }
+});
+
 redrawBtn.addEventListener('click', onRedrawBtnClick)
 clearBtn.addEventListener('click', onClearBtnClick);
 shadeBtn.addEventListener('click', onShadeBtnClick);
