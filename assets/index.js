@@ -1,6 +1,7 @@
 // Variables
 let shadeMode = false;
 let drawMode = true;
+let colorMode = false;
 
 // Elements
 const body = document.querySelector('body');
@@ -22,6 +23,10 @@ clearBtn.innerText = 'Clear';
 const shadeBtn = document.createElement('button');
 shadeBtn.classList.add('btn', 'btn--shade');
 shadeBtn.innerText = 'Toggle shade mode';
+
+const colorBtn = document.createElement('button');
+colorBtn.classList.add('btn', 'btn--color');
+colorBtn.innerText = 'Toggle rainbow mode';
 
 function initGridItem() {
   let gridItem = document.createElement('div');
@@ -73,16 +78,18 @@ function createGrid(amount = 16) {
         return;
       }
 
+      if (!shadeMode) {
+        colorMode ? target.style.backgroundColor = `rgb(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256})` : target.style.backgroundColor = `rgb(0,0,0)`;
+      }
+
       let opacity = parseFloat(target.getAttribute('data-opacity'));
       target.classList.add('active');
       if (!(opacity > 10) && shadeMode == true) {
         target.style.backgroundColor = `rgba(0,0,0,${opacity * 0.1})`;
         target.setAttribute('data-opacity', `${(opacity + 1).toString()}`);
-      } else if (shadeMode == false) {
-        target.style.backgroundColor = `rgb(0,0,0)`;
       }
     }
-  }, true)
+  }, true);
 
   grid.style.gridTemplateRows = `repeat(${amount}, 1fr)`;
   grid.style.gridTemplateColumns = `repeat(${amount}, 1fr)`;
@@ -114,7 +121,12 @@ function onClearBtnClick(e) {
 }
 
 function onShadeBtnClick(e) {
-  shadeMode = shadeMode ? false : true;
+  shadeMode = !shadeMode;
+  e.target.blur();
+}
+
+function onColorBtnClick(e) {
+  colorMode = !colorMode;
   e.target.blur();
 }
 
@@ -139,10 +151,12 @@ window.addEventListener('keyup', e => {
 redrawBtn.addEventListener('click', onRedrawBtnClick)
 clearBtn.addEventListener('click', onClearBtnClick);
 shadeBtn.addEventListener('click', onShadeBtnClick);
+colorBtn.addEventListener('click', onColorBtnClick);
 
 btnContainer.appendChild(redrawBtn);
 btnContainer.appendChild(clearBtn);
 btnContainer.appendChild(shadeBtn);
+btnContainer.appendChild(colorBtn);
 
 outerContainer.appendChild(btnContainer);
 
